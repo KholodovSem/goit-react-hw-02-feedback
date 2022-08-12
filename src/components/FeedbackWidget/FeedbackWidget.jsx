@@ -1,5 +1,5 @@
 import React from 'react';
-import Buttons from './Buttons';
+import Button from './Button';
 import FeedbackSection from './FeedbackSection';
 import Statistic from './StatisticList';
 import Notifacation from './Notifacation';
@@ -11,23 +11,11 @@ class FeedbackWidget extends React.Component {
     bad: 0,
   };
 
-  tipGoodFeedback = () => {
+  tipFeedback = (name) => {
     this.setState((prevState) => ({
-      good: prevState.good + 1,
+      [name]: prevState[name] + 1,
     }));
     this.countTotalFeedback();
-  };
-
-  tipNeutralFeedback = () => {
-    this.setState((prevState) => ({
-      neutral: prevState.neutral + 1,
-    }));
-  };
-
-  tipBadFeedback = () => {
-    this.setState((prevState) => ({
-      bad: prevState.bad + 1,
-    }));
   };
 
   countTotalFeedback = () => {
@@ -41,15 +29,16 @@ class FeedbackWidget extends React.Component {
 
   render() {
     const {good, neutral, bad} = this.state;
+    const nameButtons = Object.keys(this.state);
 
     return (
       <>
       <FeedbackSection title="Please leave feedback">
-        <Buttons
-          tipGoodFeedback={this.tipGoodFeedback}
-          tipBadFeedback={this.tipBadFeedback}
-          tipNeutralFeedback={this.tipNeutralFeedback}
-        />
+        <div>
+        {nameButtons.map((button) => (
+          <Button name={button} key={button} onTip={this.tipFeedback}/>
+        ))}
+        </div>
       </FeedbackSection>
         { this.countTotalFeedback() > 0 ?
           <FeedbackSection title="Statistics">

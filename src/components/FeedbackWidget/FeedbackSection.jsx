@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Section = styled.section`
@@ -21,6 +22,10 @@ const FeedbackSection = ({children, title}) => (
   </Section>
 )
 
+FeedbackSection.propTypes = {
+  children: PropTypes.node,
+  title: PropTypes.string.isRequired
+}
 
 export default FeedbackSection;
 
